@@ -11,42 +11,45 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Node setup
+      # Node
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
-      # 🔥 ADD THIS (JAVA FIX)
+
+      # Java (IMPORTANT)
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-          
+
       # Init project
       - run: npm init -y
 
-      # Install capacitor core + cli + android (IMPORTANT)
+      # Install everything
       - run: npm install @capacitor/core @capacitor/cli @capacitor/android
 
-      # Create web folder & copy your site
+      # Create web files
       - run: mkdir www
       - run: cp index.html www/index.html
 
       # Init capacitor
       - run: npx cap init "Oni Short" oni.short.app --web-dir=www
 
-      # Add Android platform
+      # Add android
       - run: npx cap add android || echo "already added"
 
-      # Sync files
+      # Sync
       - run: npx cap sync
 
-      # Build APK
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      # 🔥 CLEAN GRADLE CACHE (IMPORTANT FIX)
+      - run: rm -rf ~/.gradle
 
-      # Upload APK (FIXED VERSION v4)
+      # Build APK
+      - run: cd android && chmod +x gradlew && ./gradlew clean && ./gradlew assembleDebug
+
+      # Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
