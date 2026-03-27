@@ -1,2 +1,1 @@
-# oni-short-app
-oni-short-app
+index.html
