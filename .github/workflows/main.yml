@@ -11,19 +11,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # ✅ Node setup
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      # ✅ Java setup (IMPORTANT)
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # ✅ Init project
       - run: npm init -y
       - run: npm install @capacitor/core @capacitor/cli
 
-      # ✅ FIRST create www folder
+      # ✅ Create web files
       - run: mkdir www
       - run: cp index.html www/index.html
 
-      # ✅ THEN init capacitor
+      # ✅ Capacitor init
       - run: npx cap init "Oni Short" oni.short.app --web-dir=www
 
       # ✅ Android setup
