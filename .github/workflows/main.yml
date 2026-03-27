@@ -16,7 +16,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
+          
+      # 🔥 ADD THIS (JAVA FIX)
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
       # Init project
       - run: npm init -y
 
