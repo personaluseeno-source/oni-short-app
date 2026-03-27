@@ -17,20 +17,23 @@ jobs:
           node-version: '18'
 
       - run: npm init -y
-
       - run: npm install @capacitor/core @capacitor/cli
 
-      - run: npx cap init oni.short.app "Oni Short"
-
-      # 👉 IMPORTANT (ye missing tha)
+      # ✅ FIRST create www folder
       - run: mkdir www
       - run: cp index.html www/index.html
 
+      # ✅ THEN init capacitor
+      - run: npx cap init "Oni Short" oni.short.app --web-dir=www
+
+      # ✅ Android setup
       - run: npx cap add android
       - run: npx cap sync
 
+      # ✅ Build APK
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
 
+      # ✅ Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
