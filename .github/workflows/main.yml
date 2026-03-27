@@ -22,11 +22,14 @@ jobs:
 
       - run: npx cap init oni.short.app "Oni Short"
 
-      - run: npx cap add android
+      # 👉 IMPORTANT (ye missing tha)
+      - run: mkdir www
+      - run: cp index.html www/index.html
 
+      - run: npx cap add android
       - run: npx cap sync
 
-      - run: cd android && ./gradlew assembleDebug
+      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
