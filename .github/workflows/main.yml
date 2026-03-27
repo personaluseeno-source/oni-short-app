@@ -31,7 +31,7 @@ jobs:
       - run: npx cap init "Oni Short" oni.short.app --web-dir=www
 
       # Add Android platform
-      - run: npx cap add android
+      - run: npx cap add android || echo "already added"
 
       # Sync files
       - run: npx cap sync
